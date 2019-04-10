@@ -46,3 +46,20 @@ plt.show()
 print("mean = " + str(data['CLM_FREQ'].mean()))
 print("variance = " + str(data['CLM_FREQ'].var()))
 
+# binarize the target
+data['CLM_YesNo'] = data.loc[:, 'CLM_FREQ'] > 0
+data['CLM_YesNo'] = data.loc[:, 'CLM_YesNo'].astype(int)
+
+# remove the old target
+data.drop('CLM_FREQ', axis=1, inplace=True)
+
+pd.crosstab(data['MAX_EDUC'],data['CLM_YesNo']).plot(kind='bar', stacked=False)
+plt.title('Claim frequency for Education degree')
+plt.xlabel('Education')
+plt.ylabel('Claim Yes/No')
+
+pd.crosstab(data['MARRIED'],data['CLM_YesNo']).plot(kind='bar', stacked=False)
+plt.title('Claim frequency for Married')
+plt.xlabel('Married')
+plt.ylabel('Claim Yes/No')
+
